@@ -538,8 +538,9 @@ def register():
     bpy.app.handlers.render_cancel.append(_render_post)
     bpy.app.handlers.load_post.append(_load_post)
 
-    for scene in bpy.data.scenes:
-        _sync(scene)
+    if hasattr(bpy.data, 'scenes'):
+        for scene in bpy.data.scenes:
+            _sync(scene)
 
 
 def unregister():
