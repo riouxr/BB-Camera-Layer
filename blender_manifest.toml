@@ -1,0 +1,21 @@
+schema_version = "1.0.0"
+
+id       = "bb_layer_cameras"
+version  = "1.4.0"
+name     = "BB Layer Cameras"
+tagline  = "Assign a camera per View Layer, auto-switches on render"
+type     = "add-on"
+
+maintainer = "Blender Bob"
+
+blender_version_min = "4.2.0"
+
+website = "https://github.com/BlenderBob/bb_layer_cameras"
+
+license = ["SPDX:GPL-2.0-or-later"]
+
+tags = ["Render"]
+
+[build]
+paths_exclude_pattern = ["*.pyc", "__pycache__/", ".git/", "*.md"]
+
