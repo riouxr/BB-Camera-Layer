@@ -285,10 +285,9 @@ class BB_OT_RenderMergeMultilayer(Operator):
         is_5x       = hasattr(scene, 'compositing_node_group')
         abs_orig    = bpy.path.abspath(orig_filepath)
         out_dir     = os.path.dirname(abs_orig) or tempfile.gettempdir()
-        # Use a predictable output name. In Blender 5.x the File Output node
-        # does not append a frame number for still renders → bb_multilayer.exr
-        out_name = "bb_multilayer"
-        out_path = os.path.join(out_dir, f"{out_name}.exr")
+        stem        = os.path.splitext(os.path.basename(abs_orig.rstrip('/\\')))[0]
+        out_name    = stem if stem else "bb_multilayer"
+        out_path    = os.path.join(out_dir, f"{out_name}.exr")
         errors.append(f"INFO: output → {out_path}")
 
         # ── Save compositor state ─────────────────────────────────────────
