@@ -408,8 +408,14 @@ _bb_merging  = False   # skip _render_pre during merge compositor pass
 def _render_pre(scene, depsgraph=None):
     if _bb_merging or scene.bb_intercept_f12:
         return
+    # bpy.context.view_layer is unreliable inside render handlers (restricted
+    # context). Walk the window manager instead — always accessible.
+    active_layer = None
     try:
-        active_layer = bpy.context.view_layer
+        for window in bpy.context.window_manager.windows:
+            if window.scene == scene:
+                active_layer = window.view_layer
+                break
     except Exception:
         return
     if not active_layer:
@@ -537,9 +543,13 @@ def register():
     bpy.app.handlers.render_cancel.append(_render_post)
     bpy.app.handlers.load_post.append(_load_post)
 
-    if hasattr(bpy.data, 'scenes'):
+    # bpy.data may be a _RestrictData object during installation (Blender 5.1).
+    # _load_post will sync when a file is opened, so a failed initial sync is fine.
+    try:
         for scene in bpy.data.scenes:
             _sync(scene)
+    except Exception:
+        pass
 
 
 def unregister():

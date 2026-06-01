@@ -1,7 +1,7 @@
 schema_version = "1.0.0"
 
 id       = "bb_layer_cameras"
-version  = "1.4.0"
+version  = "1.4.1"
 name     = "BB Layer Cameras"
 tagline  = "Assign a camera per View Layer, auto-switches on render"
 type     = "add-on"
